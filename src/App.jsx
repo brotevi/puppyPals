@@ -1,25 +1,32 @@
 import { useState } from "react";
+import { puppyList } from "./data";
+import "./path-to-css.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const [puppies, setPuppies] = useState(puppyList);
+  const [featPup, setfeatPup] = useState(null);
+  function handleClick(id) {
+    setfeatPup(id);
+  }
+  const featuredPup = puppies.find((puppy) => puppy.id === featPup);
+  console.log(featuredPup);
   return (
-    <>
-      <div></div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+    <div>
+      {puppies.map((puppy) => (
+        <p key={puppy.id} onClick={() => handleClick(puppy.id)}>
+          {puppy.name}
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      ))}
+      {featPup && (
+        <div>
+          <h2>{featuredPup.name}</h2>
+          <ul>
+            <li>Age: {featuredPup.age}</li>
+            <li>Email: {featuredPup.email}</li>
+          </ul>
+        </div>
+      )}
+    </div>
   );
 }
-
 export default App;
